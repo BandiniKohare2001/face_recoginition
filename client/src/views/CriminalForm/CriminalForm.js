@@ -347,12 +347,13 @@ const CriminalForm = () => {
             </div>
 
           </div>
-          <button type="button" onClick={saveCriminalData} className="bg-slate-950 hover:bg-blue-800 text-white font-bold mt-5 py-2 px-5 block mx-auto rounded-lg" >Submit</button>
+          {/* <button type="button" onClick={saveCriminalData} className="bg-slate-950 hover:bg-blue-800 text-white font-bold mt-5 py-2 px-5 block mx-auto rounded-lg btn" >Submit</button> */}
+          <button type="button" onClick={saveCriminalData} className="btn" style={{backgroundColor: ' #4a90e2'}} >Submit</button>
         </form>
       </div>
       
-      <Link to="/criminalData" className='text-white no-underline'>
-      <button type='button'className="bg-slate-950 hover:bg-blue-800 text-white  py-2 px-5 my-4 rounded-lg text-xl block mx-auto"  >  Get Criminal Data →</button></Link>
+      <Link to="/criminalData"  className='text-white no-underline link' style={{marginLeft: '-0px'}}>
+      <button type='button' style={{backgroundColor: ' #4a90e2', width: '300px'}}   className="btn">  Get Criminal Data →</button></Link>
      
 
       {/* <Footer /> */}

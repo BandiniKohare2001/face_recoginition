@@ -36,7 +36,7 @@ function Navbar() {
                
                
                {
-            user?.name ?  <button type='button' className="navbar-link" onClick={logout}> Logout </button> : <span><Link to='/signup'  className="navbar-link"> Signup </Link> <Link to='/login'  className="navbar-link">login</Link> </span> 
+            user?.name ?  <button type='button' className="navbar-link logout px-4 py-1" onClick={logout}> Logout </button> : <span><Link to='/signup'  className="navbar-link link"> Signup </Link> <Link to='/login'  className="navbar-link">login</Link> </span> 
            }
          
          <span className="text-lg mx-2 ">👋 Hey  {user?.name || "User"} !</span>

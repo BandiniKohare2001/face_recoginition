@@ -12,6 +12,8 @@ import MissingPerson from './views/MissingPerson/MissingPerson';
 import CriminalData from './views/CriminalData/CriminalData';
 import MissingPersonData from './views/MissingPersonData/MissingPersonData';
 import Button from './views/Button/Button';
+import DetectPerson from './views/DetectPerson/DetectPerson';
+
 
 
 
@@ -57,6 +59,10 @@ const router = createBrowserRouter([
     path: '/faceDetection',
     element: <FaceDetection/>
   },
+  {
+    path: '/detectperson',
+    element:<DetectPerson />
+  }
 ])
 root.render(<RouterProvider router={router} />);
 

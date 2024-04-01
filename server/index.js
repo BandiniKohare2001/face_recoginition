@@ -2,6 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import User from "./models/User.js";
 import * as faceapi from 'face-api.js';
+import nodemailer from "nodemailer";
+import Mailgen from "mailgen";
+
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -11,7 +14,7 @@ import CriminalRecord from './models/CriminalRecord.js';
 import MissingPersonRecord from "./models/MissingPerson.js";
 
 import bodyParser from 'body-parser';
-import nodemailer from 'nodemailer';
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -181,7 +184,7 @@ app.post('/login', async (req, res) => {
 
 app.post("/criminalRecord", async (req, res) => {
     const {
-       criminalID,
+        criminalID,
         address,
         name,
         state,
@@ -192,25 +195,25 @@ app.post("/criminalRecord", async (req, res) => {
         age,
         gender
     } = req.body;
-   
-        const criminalRecord = new CriminalRecord({
-           criminalID,
-            address,
-            name,
-            state,
-           image,
-            crimeInvloved,
-            dob,
-            arrestedDate,
-            age,
-            gender
-        });
 
-    
-        try {
-        const savedCriminalRecord = await criminalRecord.save() 
-        
-        
+    const criminalRecord = new CriminalRecord({
+        criminalID,
+        address,
+        name,
+        state,
+        image,
+        crimeInvloved,
+        dob,
+        arrestedDate,
+        age,
+        gender
+    });
+
+
+    try {
+        const savedCriminalRecord = await criminalRecord.save()
+
+
         res.json({
             success: true,
             data: savedCriminalRecord,
@@ -226,13 +229,13 @@ app.post("/criminalRecord", async (req, res) => {
 
 // get criminal record 
 
-app.get('/criminalRecords',async(req,res)=>{
+app.get('/criminalRecords', async (req, res) => {
     const criminalRecords = await CriminalRecord.find();
 
     res.json({
-        success:true,
-        data:criminalRecords,
-        message:'Criminal Record fetched successfully'
+        success: true,
+        data: criminalRecords,
+        message: 'Criminal Record fetched successfully'
     })
 });
 app.get('/criminalRecords', async (req, res) => {
@@ -249,19 +252,19 @@ app.get('/criminalRecords', async (req, res) => {
 
 app.delete('/criminalRecord/:_id', async (req, res) => {
     const { _id } = req.params;
-    try{
-     await CriminalRecord.deleteOne({ _id : _id });
+    try {
+        await CriminalRecord.deleteOne({ _id: _id });
 
-    res.json({
-        success: true,
-        message: 'Successfully deleted Criminal data'
-    });
-}  catch (err) {
-    res.json({
-        success: false,
-        message: err.message
-    })
-}
+        res.json({
+            success: true,
+            message: 'Successfully deleted Criminal data'
+        });
+    } catch (err) {
+        res.json({
+            success: false,
+            message: err.message
+        })
+    }
 
 });
 
@@ -269,58 +272,54 @@ app.delete('/criminalRecord/:_id', async (req, res) => {
 
 app.put('/criminalRecord/:_id', async (req, res) => {
     const { _id } = req.params;
-    const {  criminalID, address, name, state, photo, crimeInvloved, dob, arrestedDate, age, gender } = req.body;
+    const { criminalID, address, name, state, photo, crimeInvloved, dob, arrestedDate, age, gender } = req.body;
 
-    await CriminalRecord.updateOne( { _id: _id },
-      {
-        $set: { criminalID, address, name, state, photo, crimeInvloved, dob, arrestedDate, age, gender },
-      }
+    await CriminalRecord.updateOne({ _id: _id },
+        {
+            $set: { criminalID, address, name, state, photo, crimeInvloved, dob, arrestedDate, age, gender },
+        }
     );
 
     try {
-      const updateCriminalData = await CriminalRecord.findOne({ _id: _id });
-      return res.status(200).json({
-        success: true,
-        data: updateCriminalData ,
-        message: "Criminal Data updated successfully",
-      });
+        const updateCriminalData = await CriminalRecord.findOne({ _id: _id });
+        return res.status(200).json({
+            success: true,
+            data: updateCriminalData,
+            message: "Criminal Data updated successfully",
+        });
     } catch (err) {
-      res.status(500).json({
-        success: false,
-        message: err.message,
-      });
+        res.status(500).json({
+            success: false,
+            message: err.message,
+        });
     }
-  }) ;
+});
 
 
 // missing person form api
 
 app.post("/missingPerson", async (req, res) => {
     const {
-        address,
         name,
+        address,
         state,
         image,
         dob,
         age,
         gender
     } = req.body;
-   
-        const missingPersonRecord = new MissingPersonRecord({
-            address,
-            name,
-            state,
-            image,
-            dob,
-            age,
-            gender
-        });
 
-
-        try {
-        const savedMissingPersonRecord = await missingPersonRecord.save() 
-      
-        
+    const missingPersonRecord = new MissingPersonRecord({
+        name,
+        address,
+        state,
+        image,
+        dob,
+        age,
+        gender
+    });
+    try {
+        const savedMissingPersonRecord = await missingPersonRecord.save()
         res.json({
             success: true,
             data: savedMissingPersonRecord,
@@ -336,15 +335,23 @@ app.post("/missingPerson", async (req, res) => {
 
 // get missing person record 
 
-app.get('/missingPersons',async(req,res)=>{
-    const missingPerson = await MissingPersonRecord.find();
-
-    res.json({
-        success:true,
-        data:missingPerson,
-        message:'Missing person Record fetched successfully'
-    })
+// get all missing persons
+app.get('/missingPersons', async (req, res) => {
+    try {
+        const missingPersons = await MissingPersonRecord.find();
+        res.json({
+            success: true,
+            data: missingPersons,
+            message: 'All missing persons data retrieved successfully'
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
 });
+
 
 
 // delete missing person 
@@ -370,80 +377,85 @@ app.delete('/missingperson/:_id', async (req, res) => {
 
 
 
-// Function to send email
-function sendEmail(personName) {
-   
-    // Create a nodemailer transporter
-    const transporter = nodemailer.createTransport({
-        service: 'your_email_service_provider',
-        auth: {
-          user: 'your_email_address',
-          pass: 'your_email_password'
-        }
-      });
-      
-      // Endpoint to send email
-      app.post('/send-email', (req, res) => {
-        const { name, email, data } = req.body;
-      
-        // Construct email message
+
+
+
+
+
+
+
+
+
+// Endpoint to send email
+app.post('/sendemail', (req, res) => {
+    const { name, email } = req.body;
+    console.log(name)
+    const mailGenerator = new Mailgen({
+        theme: "salted",
+        product: {
+            name: "Bandini Kohare",
+            link: "https://mailgen.js/",
+            copyright: "Copyright © Bandini. All rights reserved.",
+        },
+    });
+
+    const emails = {
+        body: {
+            name: name,
+            intro: `Criminal match with ${name}`,
+            outro:
+                "Need help, or have questions? Just reply to this email, we'd love to help.",
+        },
+    };
+
+    const emailBody = mailGenerator.generate(emails);
+
+    sendSignUpMail(email, "Criminal Matched", emailBody)
+    res.json({
+        message: "mail send Successfully"
+    })
+});
+
+
+
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    auth: {
+        user: process.env.MAIL,
+        pass: process.env.PASSWORD,
+    },
+});
+
+const sendSignUpMail = async (email, subject, emailBody) => {
+    try {
         const mailOptions = {
-            from: 'bandinikohare16@gmail.com',
-            to: 'bandinikohare30@gmail.com',
-            subject: 'Face Detected!',
-          text:` Hello ${name}, Face Detected! Here's the data: ${data}`
+            from: {
+                name: "Bandini Kohare",
+                address: process.env.MAIL,
+            },
+            to: email, // Ensure that the recipient email address is correctly provided here
+            subject: subject,
+            html: emailBody,
         };
-      
+
+        // Check if email is provided
+        if (!email || !email.trim()) {
+            throw new Error("Recipient email address is missing or invalid.");
+        }
+
         // Send email
         transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.error('Error sending email:', error);
-            res.status(500).send('Error sending email');
-          } else {
-            console.log('Email sent:', info.response);
-            res.status(200).send('Email sent successfully');
-          }
+            if (error) {
+                return console.error('Error sending email:', error);
+            }
+            console.log("Message sent: %s", info.messageId);
         });
-      });
-    
-      }
-    
-    
-    
-    
-    
-
-
-//face detection
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage: storage });
-// app.get('/api/match-face', upload.single('image'), async (req, res) => {
-//     // const client = new MongoClient('mongodb://localhost:27017', { useUnifiedTopology: true });
-  
-//     try {
-//     //   await client.connect();
-//     //   const database = client.db('criminal-face-recognition');
-//     //   const collection = database.collection('criminalrecords');
-  
-//     const faceDescriptor = faceDescriptor(req.file.buffer); // Get face descriptor from the uploaded image
-
-//     const storedDescriptors = await collection.find({}, { projection: { _id: 0, faceDescriptor: 1 } }).toArray();
-
-//     const isMatched = storedDescriptors.some((storedDescriptor) => {
-//       // Compare face descriptors using your matching logic (e.g., Euclidean distance)
-//       const distance = faceapi.euclideanDistance(faceDescriptor, storedDescriptor.faceDescriptor);
-//       return distance < 0.6; // Adjust the threshold based on your use case
-//     });
-
-//       res.json({ isMatched: true });
-//     } catch (error) {
-//       console.error('Error matching face:', error);
-//       res.status(500).json({ error: 'Internal Server Error' });
-//     } finally {
-//       await client.close();
-//     }
-//   })
-
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
+};
 
 
 
@@ -452,3 +464,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`The server is Running on Port ${PORT} 🚀`);
 });
+

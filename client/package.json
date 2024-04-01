@@ -3,17 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
-    "bootstrap": "^5.3.2",
+    "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "crunchy-toast": "^0.1.6",
+    "emailjs-com": "^3.2.0",
     "face-api.js": "^0.22.2",
     "image-diff": "^2.0.0",
     "init": "^0.1.2",
+    "nodemailer": "^6.9.13",
     "npx": "^10.2.2",
     "path-browserify": "^1.0.1",
     "react": "^18.2.0",
@@ -54,6 +57,8 @@
   },
   "proxy": "http://localhost:3000",
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.2.1"
   }
 }

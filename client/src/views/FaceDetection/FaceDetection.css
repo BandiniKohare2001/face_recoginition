@@ -31,12 +31,17 @@
 }
 
 .canvas {
-    position: absolute;
-    top: 0.3%;
-    left: 28%;
-
-    
+  position: absolute;
+  top: 0.3%;
+  left: 28%;
+  
   }
 .container{
     margin-top: 20px;
+}
+.current-image{
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

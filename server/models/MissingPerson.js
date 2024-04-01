@@ -6,7 +6,7 @@ const missingPersonSchema = new Schema({
         type: String,
         required: true
     },
-    Name: {
+    name: {
         type: String,
         required: true
     },

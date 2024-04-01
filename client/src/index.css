@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.link{
+  text-decoration: none;
+  
+}
+.abso{
+  position: absolute;
+  top: 620px;
+  right: 420px;
+}
+.absolte{
+  position: absolute;
+  top: 43px;
+  color:  #4a90e2;
+  right: 360px;
+}
