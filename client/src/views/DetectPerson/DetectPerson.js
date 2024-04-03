@@ -240,7 +240,7 @@ function FaceDetection() {
         ${matchedPerson.crimeInvolved ? `Crime Involved: ${matchedPerson.crimeInvolved}` : ''}
         `
       };
-      await emailjs.send('service_bn7agej', 'template_ers3469', templateParams, 'XLUhC0oBDnLv47Zz1');
+      await emailjs.send(');
       showToast('Email sent successfully', 'success', 3000);
     } catch (error) {
       console.error('Error sending email:', error);
