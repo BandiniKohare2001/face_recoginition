@@ -21,11 +21,11 @@ const CriminalForm = () => {
   const [crimeInvloved, setCrimeInvloved] = useState("");
   const [criminalID, setCriminalID] = useState("");
   const [data, setData] = useState([]);
-  const [result,setResult]=useState(null);
+  const [result, setResult] = useState(null);
   const [isValid, setIsValid] = useState(true);
 
 
-  
+
   const loadData = async () => {
     try {
       const response = await axios.get('http://localhost:8080/criminal-record/get-all-criminal');
@@ -54,13 +54,13 @@ const CriminalForm = () => {
     loadData();
   }, []);
 
-  
 
-  
+
+
 
 
   const saveCriminalData = async () => {
-   
+
 
     const response = await axios.post("http://localhost:8080/criminal-record/insert", {
       criminalID,
@@ -110,7 +110,7 @@ const CriminalForm = () => {
   };
 
 
-  
+
   // const UpdateCriminalData = async (_id) => {
   //   // if (!amount) {
   //   //   showToast("amount is required", "alert", 4000);
@@ -172,6 +172,16 @@ const CriminalForm = () => {
 
 
 
+  const handleImageChange = (event) => {
+    const selectedImage = event.target.files[0];
+    setImage(selectedImage);
+  };
+
+  const handleCameraCapture = () => {
+    // Code to capture image from camera
+    // This part depends on the implementation, you can use libraries like react-webcam or any custom solution
+    // Once image is captured, set it to the 'image' state
+  };
 
 
   return (
@@ -191,14 +201,14 @@ const CriminalForm = () => {
                 <label className='font-semibold text-lg'>Criminal ID:</label>
                 <input type="number"
                   className='input-box'
-                  placeholder='Enter your criminal id'    
-                  id="criminalId" 
-                  value={criminalID} 
+                  placeholder='Enter your criminal id'
+                  id="criminalId"
+                  value={criminalID}
                   onChange={(e) => {
                     setCriminalID(e.target.value)
                   }} />
-              </div>  
-                             
+              </div>
+
               <div className="form-group">
                 <label className='font-semibold text-lg'> Name:</label>
                 <input type="text"
@@ -234,7 +244,7 @@ const CriminalForm = () => {
                   value={dob}
                   onChange={(e) => {
                     setDob(e.target.value);
-                    
+
                   }}
                 />
               </div>
@@ -246,12 +256,12 @@ const CriminalForm = () => {
                   placeholder='Enter your age'
                   id="age"
                   value={age}
-                 
+
                   // onChange={(e) => {
                   //   setAge(e.target.value)
-                   
+
                   // }}  
-                  onClick={calculateAge} readOnly/>
+                  onClick={calculateAge} readOnly />
               </div>
 
 
@@ -316,7 +326,7 @@ const CriminalForm = () => {
                   onChange={handleArrestedDateChange}
                   style={{ borderColor: isValid ? 'initial' : 'red' }}
                 />
-                 {!isValid && <p style={{ color: 'red' }}>Please Enter Valid Date</p>}
+                {!isValid && <p style={{ color: 'red' }}>Please Enter Valid Date</p>}
               </div>
 
               <div className="form-group">
@@ -334,27 +344,47 @@ const CriminalForm = () => {
             <input type="text" name="imagePath" className='input-box'/>
           </div> */}
 
-<div className="form-group">
-            <label className='font-semibold text-lg'>Image URL:</label>
-            <input type="text" 
-            className='input-box' 
-            id="image"
-            value={image}
-            onChange={(e) => {
-              setImage(e.target.value)
-            }}/>
-          </div>
+              {/* <div className="form-group">
+                <label className='font-semibold text-lg'>Image URL:</label>
+                <input type="text"
+                  className='input-box'
+                  id="image"
+                  value={image}
+                  onChange={(e) => {
+                    setImage(e.target.value)
+                  }} />
+              </div> */}
+              <div className="form-group">
+                <label className='font-semibold text-lg'>Upload Image:</label>
+               <div className=' d-flex'>
+               <input type="file"
+                  className='input-box'
+                  id="image"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                      setImage(reader.result);
+                    };
+                  }} />
+               
+
+  
+               </div>
+              </div>
             </div>
 
           </div>
           {/* <button type="button" onClick={saveCriminalData} className="bg-slate-950 hover:bg-blue-800 text-white font-bold mt-5 py-2 px-5 block mx-auto rounded-lg btn" >Submit</button> */}
-          <button type="button" onClick={saveCriminalData} className="btn" style={{backgroundColor: ' #4a90e2'}} >Submit</button>
+          <button type="button" onClick={saveCriminalData} className="btn" style={{ backgroundColor: ' #4a90e2' }} >Submit</button>
         </form>
       </div>
-      
-      <Link to="/criminalData"  className='text-white no-underline link' style={{marginLeft: '-0px'}}>
-      <button type='button' style={{backgroundColor: ' #4a90e2', width: '300px'}}   className="btn">  Get Criminal Data →</button></Link>
-     
+
+      <Link to="/criminalData" className='text-white no-underline link' style={{ marginLeft: '-0px' }}>
+        <button type='button' style={{ backgroundColor: ' #4a90e2', width: '300px' }} className="btn">  Get Criminal Data →</button></Link>
+
 
       {/* <Footer /> */}
     </>

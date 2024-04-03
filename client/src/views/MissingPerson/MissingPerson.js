@@ -170,7 +170,7 @@ const CriminalForm = () => {
                   onChange={(e) => setState(e.target.value)}
                 />
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label className='font-semibold text-lg'>Image URL:</label>
                 <input
                   type="text"
@@ -178,7 +178,22 @@ const CriminalForm = () => {
                   value={image}
                   onChange={(e) => setImage(e.target.value)}
                 />
-              </div>
+              </div> */}
+              <div className="form-group">
+    <label className='font-semibold text-lg'>Upload Image:</label>
+    <input type="file" 
+    className='input-box' 
+    id="image"
+    accept="image/*"
+    onChange={(e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            setImage(reader.result);
+        };
+    }}/>
+</div>
             </div>
           </div>
           <button

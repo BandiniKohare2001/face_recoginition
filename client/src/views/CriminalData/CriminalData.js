@@ -52,7 +52,7 @@ function CriminalData() {
 
             return (
               <div className='data-card space-y-2'>
-                    <img src={image} className='w-[100%] mx-auto mb-2' />     
+                    <img src={image} className='mx-auto mb-2' style={{width:'330px', height:'260px'}} />     
                 <p> <b>Name : </b> {name} </p>
                 <p> <b>Criminal Id : </b>{criminalID}</p>
                 <p> <b>gender : </b> {gender}</p>

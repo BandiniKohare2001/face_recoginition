@@ -68,7 +68,7 @@ const del = async (_id) => {
       return  (
        
         <div className='data-card space-y-2'> 
-          <img src={image} className='w-[100%] mx-auto mb-2' />         
+          <img src={image} className='mx-auto mb-2' style={{width:'330px', height:'260px'}} />         
           <p> <b>Name : </b> {name} </p>
           <p> <b>Gender : </b> {gender}</p>
           <p> <b>DOB : </b> {dob}</p>
@@ -85,9 +85,6 @@ const del = async (_id) => {
     })
   }
 </div>
-<Link to="/detectperson" className="link absolte">
-        face Recognition
-      </Link>
 </>
   )
 }

@@ -30,7 +30,7 @@ function Navbar() {
         <Link to="/criminalform" className="navbar-link"> Criminal Data </Link>
 
         <Link to="/missingperson" className="navbar-link"> Missing Person </Link>
-        <Link to="/faceDetection" className="navbar-link">FaceDetection</Link>
+        <Link to="/detectperson" className="navbar-link">FaceDetection</Link>
  
         {/* <Link to='/signup'  className="navbar-link"> Signup </Link> */}
                
